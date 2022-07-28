@@ -5,9 +5,60 @@
 /doc/
 /pkg/
 /spec/reports/
-/tmp/
+
+# need to commit the pid folder to our repo for builds to work
+/tmp/*
+/tmp/pids/*
+!/tmp/pids
+!/tmp/pids/.keep
 
 # rspec failure tracking
 .rspec_status
+/.rspec
+/spec/coverage
+/spec/tmp
 
+# Sass cache
+/.sass-cache
+
+# General config setting
+/config/config.yml
+
+# Ruby gem compiled files
 /*.gem
+
+# dotenv config
+/.env
+.env.*.local
+
+# netrc
+.netrc
+
+# ignore the pry history file
+.pry_history
+# ignore this stupid stuff
+*.DS_Store
+
+# Rubymine
+.idea
+
+# ngrok webhook
+/ngrok
+ngrok.yml
+
+# yarn installed files
+/node_modules/
+yarn-error.log
+
+# byebug
+.byebug_history
+
+# Rails 5+ storage
+storage/
+
+# Local server process definition with foreman
+Procfile-local
+/db/schema_cache.yml
+
+# From SimpleConv gem
+coverage

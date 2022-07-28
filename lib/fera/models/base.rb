@@ -33,7 +33,7 @@ module Fera
         elsif superclass != Object && superclass.headers
           superclass.headers
         else
-          _headers ||= {}
+          _headers ||= {} # rubocop:disable Lint/UnderscorePrefixedVariableName
         end
       end
 

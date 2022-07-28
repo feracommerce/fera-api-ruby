@@ -1,4 +1,6 @@
-# Introduction
+[![Checks](https://github.com/feracommerce/fera-api-ruby/actions/workflows/checks.yml/badge.svg)](https://github.com/feracommerce/fera-api-ruby/actions/workflows/checks.yml)
+
+# Fera API Ruby Client
 
 Welcome to the Fera API gem for Ruby. This gem is Fera's official Ruby SDK and make it easy to interact with the Fera API.
 
