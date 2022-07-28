@@ -1,0 +1,92 @@
+PATH
+  remote: .
+  specs:
+    fera-api (0.1.0)
+      activemodel (>= 4)
+      activeresource (>= 6)
+      activesupport (>= 5.0)
+      json-jwt (>= 1)
+      require_all (>= 2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (6.1.6)
+      activesupport (= 6.1.6)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
+    activeresource (6.0.0)
+      activemodel (>= 6.0)
+      activemodel-serializers-xml (~> 1.0)
+      activesupport (>= 6.0)
+    activesupport (6.1.6)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
+    aes_key_wrap (1.1.0)
+    ast (2.4.2)
+    bindata (2.4.10)
+    builder (3.2.4)
+    concurrent-ruby (1.1.10)
+    diff-lcs (1.5.0)
+    i18n (1.10.0)
+      concurrent-ruby (~> 1.0)
+    json-jwt (1.13.0)
+      activesupport (>= 4.2)
+      aes_key_wrap
+      bindata
+    minitest (5.16.0)
+    parallel (1.22.1)
+    parser (3.1.2.0)
+      ast (~> 2.4.1)
+    rainbow (3.1.1)
+    rake (13.0.6)
+    regexp_parser (2.4.0)
+    require_all (3.0.0)
+    rexml (3.2.5)
+    rspec (3.11.0)
+      rspec-core (~> 3.11.0)
+      rspec-expectations (~> 3.11.0)
+      rspec-mocks (~> 3.11.0)
+    rspec-core (3.11.0)
+      rspec-support (~> 3.11.0)
+    rspec-expectations (3.11.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-mocks (3.11.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-support (3.11.0)
+    rubocop (1.29.0)
+      parallel (~> 1.10)
+      parser (>= 3.1.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.17.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.17.0)
+      parser (>= 3.1.1.0)
+    ruby-progressbar (1.11.0)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
+    unicode-display_width (2.1.0)
+    zeitwerk (2.5.4)
+
+PLATFORMS
+  x86_64-darwin-18
+  x86_64-darwin-20
+
+DEPENDENCIES
+  fera-api!
+  rake (~> 13.0)
+  rspec (~> 3.0)
+  rubocop
+
+BUNDLED WITH
+   2.3.13

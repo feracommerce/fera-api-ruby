@@ -1,0 +1,56 @@
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Layout/LeadingCommentSpace:
+  Enabled: false
+Layout/LineLength:
+  Max: 200
+# If AbcSize > 50, really really really really really really really complex
+Metrics/AbcSize:
+  Max: 50
+# Use the default setting
+Metrics/BlockNesting:
+  Enabled: true
+Metrics/BlockLength:
+  Max: 200
+  Exclude:
+    # RuboCop's default
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    # In many cases, config/routes.rb has very long blocks
+    - 'config/routes.rb'
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Max: 30
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: true
+  Max: 4
+Metrics/PerceivedComplexity:
+  Enabled: false
+Layout/TrailingEmptyLines:
+  Enabled: false
+Layout/TrailingWhitespace:
+  Enabled: false
+Layout/BlockAlignment:
+  Enabled: false
+Layout/DefEndAlignment:
+  Enabled: false
+Layout/EndAlignment:
+  Enabled: false
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+Layout/LeadingEmptyLines:
+  Enabled: false
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: space
