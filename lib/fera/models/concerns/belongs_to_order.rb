@@ -27,11 +27,10 @@ module Fera
       self.attributes['order_id'] = order_id
       self.attributes['external_order_id'] = external_order_id
       self.attributes.delete('order')
-      @order
     end
 
     def order_id=(new_id)
-      return new_id if order_id == new_id
+      return if order_id == new_id
 
       if new_id.nil?
         reset_order_instance_assoc
@@ -41,7 +40,7 @@ module Fera
     end
 
     def external_order_id=(new_id)
-      return new_id if external_order_id == new_id
+      return if external_order_id == new_id
 
       if new_id.nil?
         reset_order_instance_assoc

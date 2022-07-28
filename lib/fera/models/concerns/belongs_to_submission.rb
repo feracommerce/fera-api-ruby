@@ -21,7 +21,6 @@ module Fera
                     end
       self.attributes['submission_id'] = submission_id
       self.attributes.delete('submission')
-      @submission
     end
 
     def submission

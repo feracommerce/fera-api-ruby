@@ -5,7 +5,7 @@ module Fera
     attr_reader :result_count, :total_count, :page, :total_pages, :page_size, :offset, :limit
 
     def initialize(parsed = {})
-      @elements = parsed['data']
+      super(parsed['data'])
       @result_count = parsed['result_count']
       @total_count = parsed['total_count']
 

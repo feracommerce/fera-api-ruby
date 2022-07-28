@@ -21,7 +21,6 @@ module Fera
                     end
       self.attributes['review_id'] = review_id
       self.attributes.delete('review')
-      @review
     end
 
     def review

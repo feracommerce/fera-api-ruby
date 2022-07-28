@@ -27,7 +27,6 @@ module Fera
       self.attributes['product_id'] = product_id
       self.attributes['external_product_id'] = external_product_id
       self.attributes.delete('product')
-      @product
     end
 
     def product

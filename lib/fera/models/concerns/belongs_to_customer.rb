@@ -32,9 +32,6 @@ module Fera
         @customer = Customer.new(customer, customer_id.present?)
         self.attributes.delete('customer')
       end
-
-
-      @customer
     end
 
     def customer_id=(new_id)

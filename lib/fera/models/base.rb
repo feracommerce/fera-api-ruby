@@ -108,7 +108,7 @@ module Fera
 
       super(dynamic_attributes, persisted)
 
-      association_keys.each do |name, opts|
+      association_keys.each do |name, _opts|
         if attributes.key?(name.to_s) || attributes.key?(name.to_sym)
           val = attributes.to_h[name.to_s] || attributes.to_h[name.to_sym]
           self.send("#{ name }=", val) if respond_to?("#{ name }=")
@@ -135,13 +135,19 @@ module Fera
     end
 
     def created_at=(new_created_at)
-      return super(Time.parse(new_created_at)) if new_created_at.is_a?(String)
-      super
+      if new_created_at.is_a?(String)
+        super(Time.parse(new_created_at))
+      else
+        super
+      end
     end
 
     def updated_at=(new_updated_at)
-      return super(Time.parse(new_updated_at)) if new_updated_at.is_a?(String)
-      super
+      if new_updated_at.is_a?(String)
+        super(Time.parse(new_updated_at))
+      else
+        super
+      end
     end
 
     def update(changed_attributes, extra_params = {}, raise = false)
@@ -168,7 +174,7 @@ module Fera
       update(changed_attributes, extra_params, true)
     end
 
-    def valid?(context = nil)
+    def valid?(_context = nil)
       super()
     end
 
@@ -178,7 +184,7 @@ module Fera
       run_callbacks :create do
 
         data = as_json
-        (self.class.belongs_tos.merge(self.class.has_ones)).each do |name, opts|
+        (self.class.belongs_tos.merge(self.class.has_ones)).each do |name, _opts|
           next unless instance_variable_defined?(:"@#{ name }")
           nested_resource = self.send(name)
           if nested_resource.present? && !nested_resource.persisted?
@@ -187,7 +193,7 @@ module Fera
           end
         end
 
-        self.class.has_manys.each do |name, opts|
+        self.class.has_manys.each do |name, _opts|
           next unless instance_variable_defined?(:"@#{ name }")
           nested_resource = self.send(name)
 
