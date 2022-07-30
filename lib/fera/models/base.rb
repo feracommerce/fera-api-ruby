@@ -152,7 +152,7 @@ module Fera
 
     def update(changed_attributes, extra_params = {}, raise = false)
       run_callbacks(:update) do
-        connection.put(element_path(prefix_options, extra_params), dynamic_changed_attributes.to_json, self.class.headers).tap do |response|
+        connection.put(element_path(prefix_options, extra_params), changed_attributes.to_json, self.class.headers).tap do |response|
           load_attributes_from_response(response)
         end
 
