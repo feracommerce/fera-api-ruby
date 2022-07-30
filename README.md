@@ -11,7 +11,7 @@ Fera API Developer Docs and API Reference can be found at: [https://developers.f
 Install the gem and add to the application's Gemfile by executing:
 
 ```ruby
-  gem 'fera', '~> 0.1'
+  gem 'fera-api'
 ```
 
 # Configuration
