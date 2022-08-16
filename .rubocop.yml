@@ -6,8 +6,6 @@ AllCops:
     - 'db/schema.rb'
     - 'node_modules/**/*'
     - 'tmp/**/*'
-    - 'spec/**/*'
-    - '*/spec/**/*'
     - 'lib/tasks/one_offs/**/*' # We don't really care about linting one-off tasks
     - 'app/migrators/**/*' # Migrators are one-off tasks so there isn't much need to lint them
   DisplayCopNames: true
