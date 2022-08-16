@@ -28,6 +28,5 @@ module Fera
     rescue StandardError
       nil
     end
-
   end
 end
