@@ -30,8 +30,6 @@ module Fera
         Submission.new(attributes['submission'], true)
       elsif attributes.key?('submission_id') && submission_id.present?
         Submission.find(submission_id)
-      else
-        nil
       end
     end
   end

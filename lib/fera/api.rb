@@ -13,7 +13,7 @@ module Fera
     class Error < StandardError; end
 
     DEFAULT_HEADERS = {
-      'Api-Client' => "fera_ruby_sdk-#{ API::VERSION }",
+      'Api-Client' => "fera_ruby_sdk-#{ API::VERSION }"
     }
 
     ##
@@ -48,7 +48,6 @@ module Fera
       else
         self
       end
-
     end
 
     def self.revoke_token!(client_id:, client_secret:, auth_token:)

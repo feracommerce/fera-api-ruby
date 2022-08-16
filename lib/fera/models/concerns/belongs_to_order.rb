@@ -9,21 +9,21 @@ module Fera
     end
 
     def order=(order)
-      order_id = if order.is_a?(Order)
-                     order.id
-                   else
-                     order.try(:with_indifferent_access).try(:[], :id)
-                   end
+      order_id          = if order.is_a?(Order)
+                            order.id
+                          else
+                            order.try(:with_indifferent_access).try(:[], :id)
+                          end
       external_order_id = if order.is_a?(Order)
-                              order.external_id
-                            else
-                              order.try(:with_indifferent_access).try(:[], :external_id)
-                            end
-      @order = if order.is_a?(Order)
-                   order
-                 else
-                   Order.new(order, order_id.present?)
-                 end
+                            order.external_id
+                          else
+                            order.try(:with_indifferent_access).try(:[], :external_id)
+                          end
+      @order            = if order.is_a?(Order)
+                            order
+                          else
+                            Order.new(order, order_id.present?)
+                          end
       self.attributes['order_id'] = order_id
       self.attributes['external_order_id'] = external_order_id
       self.attributes.delete('order')
@@ -77,10 +77,7 @@ module Fera
         Order.find(order_id)
       elsif attributes.key?('external_order_id') && external_order_id.present?
         Order.find(external_order_id)
-      else
-        nil
       end
     end
-
   end
 end

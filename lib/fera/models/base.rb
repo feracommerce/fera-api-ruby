@@ -37,9 +37,7 @@ module Fera
         end
       end
 
-      def default_params=(default_params)
-        @default_params = default_params
-      end
+      attr_writer :default_params
 
       ##
       # @override to support extra_params
@@ -108,12 +106,14 @@ module Fera
 
       super(dynamic_attributes, persisted)
 
+      return unless attributes.present?
+
       association_keys.each do |name, _opts|
         if attributes.key?(name.to_s) || attributes.key?(name.to_sym)
           val = attributes.to_h[name.to_s] || attributes.to_h[name.to_sym]
           self.send("#{ name }=", val) if respond_to?("#{ name }=")
         end
-      end if attributes.present?
+      end
     end
 
     def load(attributes, *args)
@@ -150,7 +150,7 @@ module Fera
       end
     end
 
-    def update(changed_attributes, extra_params = {}, raise = false)
+    def update(changed_attributes, extra_params = {}, raise: false)
       run_callbacks(:update) do
         connection.put(element_path(prefix_options, extra_params), changed_attributes.to_json, self.class.headers).tap do |response|
           load_attributes_from_response(response)
@@ -171,7 +171,7 @@ module Fera
     end
 
     def update!(changed_attributes, extra_params = {})
-      update(changed_attributes, extra_params, true)
+      update(changed_attributes, extra_params, raise: true)
     end
 
     def valid?(_context = nil)
@@ -180,12 +180,12 @@ module Fera
 
     ##
     # @override to add extra params
-    def create(extra_params = {}, raise = false)
+    def create(extra_params = {}, raise: false)
       run_callbacks :create do
-
         data = as_json
-        (self.class.belongs_tos.merge(self.class.has_ones)).each do |name, _opts|
+        self.class.belongs_tos.merge(self.class.has_ones).each do |name, _opts|
           next unless instance_variable_defined?(:"@#{ name }")
+
           nested_resource = self.send(name)
           if nested_resource.present? && !nested_resource.persisted?
             nested_resource.validate!
@@ -195,6 +195,7 @@ module Fera
 
         self.class.has_manys.each do |name, _opts|
           next unless instance_variable_defined?(:"@#{ name }")
+
           nested_resource = self.send(name)
 
           next if nested_resource.nil?
@@ -227,13 +228,13 @@ module Fera
     end
 
     def create!(extra_params = {})
-      create(extra_params, true)
+      create(extra_params, raise: true)
     end
 
-    def save(extra_params = {}, raise = false)
+    def save(extra_params = {}, raise: false)
       run_callbacks :save do
         if new?
-          create(extra_params, raise) # We'll raise the error below
+          create(extra_params, raise: raise) # We'll raise the error below
         else
           # find changes
           changed_attributes = attributes.filter { |key, value| !@clean_copy.attributes.key?(key) || (@clean_copy.attributes[key] != value) || (key == self.class.primary_key) }
@@ -241,14 +242,13 @@ module Fera
           return false unless changed_attributes.keys.any?
 
           # save
-          update(changed_attributes, extra_params, raise)
+          update(changed_attributes, extra_params, raise: raise)
         end
 
         @clean_copy = clone_with_nil # Clear changes
 
         self
       end
-
     end
 
     def save!(extra_params = {})
@@ -294,9 +294,11 @@ module Fera
       if matcher.present?
         attribute_name = matcher[1]
         return super if attribute_name.blank?
+
         attribute_name = "is_#{ attribute_name }" unless attribute_name =~ /^is_/
         return super unless known_attribute?(attribute_name.to_s)
-        return !!(send(attribute_name.to_sym).presence)
+
+        return !!send(attribute_name.to_sym).presence
       end
 
       super
@@ -307,6 +309,7 @@ module Fera
       if matcher.present?
         attribute_name = matcher[1]
         return super if attribute_name.blank?
+
         attribute_name = "is_#{ attribute_name }" unless attribute_name =~ /^is_/
         return true if known_attribute?(attribute_name)
       end
@@ -318,7 +321,7 @@ module Fera
       known_attributes.map(&:to_s).include?(attribute_name.to_s)
     end
 
-    def set_last_response(result)
+    def set_last_response(result) # rubocop:disable Naming/AccessorMethodName
       response = if result.is_a?(StandardError)
                    @last_response_exception = result
                    @last_response_exception.response

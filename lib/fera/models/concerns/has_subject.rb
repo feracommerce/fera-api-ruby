@@ -26,11 +26,9 @@ module Fera
     # Returns the associated product model if it was preloaded in the original request and if the object is for a product.
     # @return [::Fera::Product, NilClass]
     def product
-      if attributes['subject'] =~ /^product/i
-        super
-      else
-        nil
-      end
+      return nil if attributes['subject'] !~ /^product/i
+
+      super
     end
 
     def for_product?

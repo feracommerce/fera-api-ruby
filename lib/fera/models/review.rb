@@ -9,7 +9,7 @@ module Fera
     def only_rating?
       body.blank? && heading.blank?
     end
-    alias_method :rating_only?, :only_rating?
+    alias rating_only? only_rating?
 
     def stars
       (('★' * rating) + ('☆' * (5 - rating))).chars.join(" ")

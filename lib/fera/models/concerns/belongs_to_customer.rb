@@ -10,8 +10,8 @@ module Fera
 
     def customer=(customer)
       if customer.is_a?(Customer)
-        @customer = customer
-        self.attributes['customer_id'] = customer.id
+        @customer                               = customer
+        self.attributes['customer_id']          = customer.id
         self.attributes['external_customer_id'] = customer.try(:external_id)
         self.attributes.delete('customer')
       elsif customer.is_a?(Hash)
@@ -59,8 +59,6 @@ module Fera
         Customer.find(customer_id)
       elsif attributes.key?('external_customer_id') && external_customer_id.present?
         Customer.find(external_customer_id)
-      else
-        nil
       end
     end
   end

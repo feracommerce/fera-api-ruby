@@ -10,15 +10,15 @@ module Fera
 
     def review=(review)
       review_id = if review.is_a?(Review)
-                        review.id
-                      else
-                        review.try(:with_indifferent_access).try(:[], :id)
-                      end
-      @review = if review.is_a?(Review)
-                      review
-                    else
-                      Review.new(review, review_id.present?)
-                    end
+                    review.id
+                  else
+                    review.try(:with_indifferent_access).try(:[], :id)
+                  end
+      @review   = if review.is_a?(Review)
+                    review
+                  else
+                    Review.new(review, review_id.present?)
+                  end
       self.attributes['review_id'] = review_id
       self.attributes.delete('review')
     end
@@ -30,10 +30,7 @@ module Fera
         Review.new(attributes['review'], true)
       elsif attributes.key?('review_id') && review_id.present?
         Review.find(review_id)
-      else
-        nil
       end
     end
-
   end
 end

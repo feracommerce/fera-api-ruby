@@ -24,32 +24,32 @@ module Fera
     def is_video?
       type.to_s == 'video'
     end
-    alias_method :video?, :is_video?
+    alias video? is_video?
 
     def is_photo?
       type.to_s == 'photo'
     end
-    alias_method :photo?, :is_photo?
+    alias photo? is_photo?
 
-    def file=(f)
-      if f.is_a?(File)
-        file_name = File.basename(f.path)
+    def file=(val)
+      if val.is_a?(File)
+        file_name = File.basename(val.path)
         mime_type_group = type == 'video' ? 'video' : 'image'
         self.attributes['file'] = {
           'name' => File.basename(file_name),
-          'data' => "data:#{ mime_type_group }/#{ file_name.split('.').last };base64,#{ Base64.encode64(f.read) }"
+          'data' => "data:#{ mime_type_group }/#{ file_name.split('.').last };base64,#{ Base64.encode64(val.read) }"
         }
       else
-        self.attributes['file'] = f
+        self.attributes['file'] = val
       end
     end
 
     private
 
     def remove_file_param
-      if self.attributes.key?('file')
-        self.attributes.delete('file')
-      end
+      return unless self.attributes.key?('file')
+
+      self.attributes.delete('file')
     end
   end
 end
