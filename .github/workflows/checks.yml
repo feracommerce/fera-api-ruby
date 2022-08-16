@@ -27,6 +27,9 @@ jobs:
           gem install rubocop
           gem install spellr
       - name: Rubocop
-        run: rubocop --format simple --parallel --config .rubocop.yml
+        run: |
+          rubocop -v
+          rubocop --format simple --parallel --config .rubocop.yml
       - name: Spelling
+          spellr -v
         run: spellr
