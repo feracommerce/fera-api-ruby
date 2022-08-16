@@ -25,5 +25,8 @@ jobs:
           bundle config set without 'default doc job cable storage ujs test db'
           bundle install --jobs 4 --retry 3
           gem install rubocop
+          gem install spellr
       - name: Rubocop
-        run: rubocop --format simple --parallel --config .rubocop.yml --fail-level W --display-only-fail-level-offenses
+        run: rubocop --format simple --parallel --config .rubocop.yml
+      - name: Spelling
+        run: spellr

@@ -80,7 +80,7 @@ module Fera
       end
 
       def new_element_path(prefix_options = {}, extra_params = {})
-        url = "#{prefix(prefix_options)}#{collection_name}/new#{format_extension}"
+        url = "#{ prefix(prefix_options) }#{ collection_name }/new#{ format_extension }"
         url += "?#{ extra_params.to_param }" if extra_params.present?
         url
       end
@@ -179,7 +179,7 @@ module Fera
     end
 
     ##
-    # @override to add exgtra params
+    # @override to add extra params
     def create(extra_params = {}, raise = false)
       run_callbacks :create do
 
@@ -257,7 +257,7 @@ module Fera
 
     def clone_with_nil
       # Clone all attributes except the pk and any nested ARes
-      cloned = Hash[attributes.reject { |k, v| k == self.class.primary_key || v.is_a?(ActiveResource::Base) }.map { |k, v| [k, v.clone] }]
+      cloned = attributes.reject { |k, v| k == self.class.primary_key || v.is_a?(ActiveResource::Base) }.map { |k, v| [k, v.clone] }.to_h
       # Form the new resource - bypass initialize of resource with 'new' as that will call 'load' which
       # attempts to convert hashes into member objects and arrays into collections of objects. We want
       # the raw objects to be cloned so we bypass load by directly setting the attributes hash.

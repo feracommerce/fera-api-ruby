@@ -1,0 +1,9 @@
+includes:
+  - lib/**/*
+excludes:
+  - node_modules/**/*
+  - app/**/*.min*
+  - "**/*.map"
+word_minimum_length: 4 # any words shorter than this will be ignored
+key_minimum_length: 6 # any strings shorter than this won't be considered non-word strings
+key_heuristic_weight: 5 # higher values mean strings are more likely to be considered words or non-words by the classifier.

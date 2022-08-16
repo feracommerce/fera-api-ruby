@@ -12,9 +12,10 @@ Gem::Specification.new do |spec|
   spec.description = "Fera API SDK gem to make it easy to interact with the Fera API to gather and display customer review, photos and videos."
   spec.homepage = "https://developers.fera.ai"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.2.0"
+  spec.required_ruby_version = ">= 2.3"
 
   spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["rubygems_mfa_required"] = 'true'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
