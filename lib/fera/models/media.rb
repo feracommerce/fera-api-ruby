@@ -37,7 +37,7 @@ module Fera
         mime_type_group = type == 'video' ? 'video' : 'image'
         self.attributes['file'] = {
           'name' => File.basename(file_name),
-          'data' => "data:#{ mime_type_group }/#{ file_name.split('.').last };base64,#{ Base64.encode64(val.read) }"
+          'data' => "data:#{ mime_type_group }/#{ file_name.split('.').last };base64,#{ Base64.encode64(val.read) }",
         }
       else
         self.attributes['file'] = val

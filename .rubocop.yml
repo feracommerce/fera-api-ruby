@@ -112,7 +112,8 @@ Style/Documentation:
 Style/DocumentationMethod:
   Enabled: false # We will decide in PR whether public method should be documented or not.
 Style/EmptyElse:
-  EnforcedStyle: empty # It helps you handle all cases if you explicitly write out the `else` with `nil` if you want to allow that case
+  AllowComments: true # When a comment is there then it means the programmer thought about the case so we can ignore it.
+  EnforcedStyle: empty  # When a comment or nil is there it means the programmer thought about the case, so there is no need for concern
 Style/FloatDivision:
   Enabled: false # Sometimes we're trying to force the number to become a float and it could be nil
 Style/FrozenStringLiteralComment:
@@ -171,3 +172,5 @@ Style/TernaryParentheses:
   Enabled: false
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: consistent_comma # It makes managing arrays much easier when we have commas at the end
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma # It makes managing hashes much easier when we have commas at the end

@@ -13,7 +13,7 @@ module Fera
     class Error < StandardError; end
 
     DEFAULT_HEADERS = {
-      'Api-Client' => "fera_ruby_sdk-#{ API::VERSION }"
+      'Api-Client' => "fera_ruby_sdk-#{ API::VERSION }",
     }
 
     ##
