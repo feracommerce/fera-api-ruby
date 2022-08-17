@@ -18,12 +18,14 @@ module Fera
 
     ##
     # @param api_key [String] Public API key, Secret API key or Auth Token (if app)
-    def self.configure(api_key, api_url: nil, strict_mode: false)
+    def self.configure(api_key, api_url: nil, strict_mode: false, debug_mode: false)
       previous_base_site = Base.site
       previous_base_headers = Base.headers
 
       api_url ||= 'https://api.fera.ai'
       Base.site = "#{ api_url.chomp('/') }/v3/private"
+
+      @debug_mode = debug_mode
 
       if api_key =~ /^sk_/
         Base.headers['Secret-Key'] = api_key
@@ -50,6 +52,8 @@ module Fera
         self
       end
     end
+
+    def self.debug_mode?; @debug_mode; end
 
     def self.revoke_token!(client_id:, client_secret:, auth_token:)
       previous_site = Base.site

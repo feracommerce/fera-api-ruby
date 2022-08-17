@@ -12,8 +12,6 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: enable
 
-Gemspec/OrderedDependencies:
-  Enabled: false
 Lint/NonLocalExitFromIterator:
   Enabled: false # We actually believe that it is more readable with premature returns
 Layout/BeginEndAlignment:
@@ -31,7 +29,6 @@ Metrics/BlockLength:
     # RuboCop's default
     - 'Rakefile'
     - '**/*.rake'
-    - 'spec/**/*.rb'
     # In many cases, config/routes.rb has very long block
     - 'config/routes.rb'
 Metrics/ClassLength:

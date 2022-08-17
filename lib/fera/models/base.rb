@@ -2,11 +2,10 @@ require_relative './collection'
 
 module Fera
   class Base < ActiveResource::Base
-    # include ActiveModel::Dirty
-
     attr_reader :last_response, :last_response_body, :last_response_message, :last_response_exception, :options
 
     self.collection_parser = ::Fera::Collection
+    self.site ||= "https://api.fera.ai/v3/private"
 
     class << self
       def belongs_to(name, options = {})
@@ -378,6 +377,10 @@ module Fera
       values = model.attributes[sub_key]
       sub_fields = sub_fields.drop(1)
       changed_attributes[sub_key] = values.map { |value| clone_selected_fields(value, sub_fields) }
+    end
+
+    def debug(message)
+      puts "[Fera-Api] #{ message }" if ::Fera::Api.debug_mode?
     end
   end
 end

@@ -1,0 +1,9 @@
+{
+  "subject": "product",
+  "external_product_id": "12345678",
+  "product_id": "fpro_12ab",
+  "average": 4.8,
+  "count": 123,
+  "ungrouped_average": 4.7,
+  "ungrouped_count": 12
+}

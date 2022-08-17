@@ -29,11 +29,16 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "activeresource", ">= 6"
   spec.add_dependency "activemodel", ">= 4"
-  spec.add_dependency "require_all", ">= 2"
-  spec.add_dependency "activesupport", ">= 5.0"
+  spec.add_dependency "activeresource", ">= 6"
+  spec.add_dependency "activesupport", ">= 4.0"
   spec.add_dependency "json-jwt", ">= 1"
+  spec.add_dependency "require_all", ">= 2"
 
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency "pry-stack_explorer"
   spec.add_development_dependency "rspec", ">= 3.0"
+  spec.add_development_dependency "to_bool"
+  spec.add_development_dependency "webmock", ">= 3.0"
 end

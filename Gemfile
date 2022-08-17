@@ -5,10 +5,12 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in fera.gemspec
 gemspec
 
-gem "rake", "~> 13.0"
-
 group :development, :test do
-  gem "rspec", "~> 3.0"
-
+  gem "pry"
+  gem "pry-byebug"
+  gem "pry-rails"
+  gem "pry-remote"
+  gem "pry-rescue"
+  gem "pry-stack_explorer"
   gem "rubocop"
 end

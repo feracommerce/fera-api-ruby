@@ -1,0 +1,91 @@
+{
+  "id": "fRev_12ab",
+  "state": "pending",
+  "subject": "product",
+  "is_verified": true,
+  "is_test": false,
+  "external_product_id": "12345678",
+  "product_id": "fpro_12ab",
+  "external_customer_id": "12345678",
+  "customer_id": "fcus_12ab",
+  "rating": 4,
+  "heading": "This is a great product!",
+  "body": "This is a great product! I love it!",
+  "store_reply": {
+    "body": "We're sorry that it took so long for your product to arrive but we are delighted that you loved the product we shipped you and recommend it to others! Thanks for being a great customer!",
+    "created_at": "2022-08-17T21:53:46.034Z",
+    "name": "MyStore.com",
+    "avatar": "https://cdn.fera.ai/img/shoppers/placeholder.png"
+  },
+  "counts": {
+    "media": 3,
+    "photos": 2,
+    "videos": 1
+  },
+  "product": {
+    "id": "fPro_12ab",
+    "external_id": "12345678",
+    "name": "Red Sneakers",
+    "sku": "RS-123",
+    "url": "https://www.example.com/red-sneakers",
+    "thumbnail_url": "https://cdn.fera.ai/img/sunglasses.png",
+    "price": 10,
+    "rating": {
+      "count": 5,
+      "average": 4.5
+    },
+    "counts": {
+      "reviews": 5,
+      "media": 3,
+      "photos": 2,
+      "videos": 1
+    },
+    "created_at": "2022-07-14T18:35:27.608Z",
+    "updated_at": "2022-07-14T18:35:27.608Z",
+    "tags": [
+      "red",
+      "sneakers"
+    ]
+  },
+  "customer": {
+    "id": "fSer_12ab",
+    "display_name": "George B.",
+    "display_location": "Austin, TX",
+    "avatar_url": "https://cdn.fera.ai/img/shoppers/placeholder.png",
+    "average_rating": 4.5,
+    "rating": 0,
+    "counts": {
+      "reviews": 5,
+      "media": 5,
+      "orders": 5,
+      "spend": 123.45
+    },
+    "external_id": "12345678",
+    "name": "Michael Bluth",
+    "email": "michael.bluth@example.com",
+    "country_code": "US",
+    "region": "Texas",
+    "city": "Austin",
+    "zip": "78701",
+    "created_at": "2022-07-14T18:35:27.187Z",
+    "updated_at": "2022-07-14T18:35:27.187Z"
+  },
+  "media": [
+    {
+      "id": "fMed_12ab",
+      "state": "pending",
+      "subject": "product",
+      "is_verified": true,
+      "is_test": false,
+      "external_product_id": "12345678",
+      "product_id": "fpro_12ab",
+      "external_customer_id": "12345678",
+      "customer_id": "fcus_12ab",
+      "type": "photo",
+      "review_id": "frev_12ab",
+      "url": "https://cdn.fera.ai/img/sunglasses.png",
+      "thumbnail_url": "https://cdn.fera.ai/img/sunglasses.png?size=thumbnail",
+      "caption": "Here's how my product purchase looked when I opened the box I received."
+    }
+  ]
+}

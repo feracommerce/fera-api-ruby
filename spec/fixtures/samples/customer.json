@@ -1,0 +1,23 @@
+{
+  "id": "fSer_12ab",
+  "display_name": "George B.",
+  "display_location": "Austin, TX",
+  "avatar_url": "https://cdn.fera.ai/img/shoppers/placeholder.png",
+  "average_rating": 4.5,
+  "rating": 0,
+  "counts": {
+    "reviews": 5,
+    "media": 5,
+    "orders": 5,
+    "spend": 123.45
+  },
+  "external_id": "12345678",
+  "name": "Michael Bluth",
+  "email": "michael.bluth@example.com",
+  "country_code": "US",
+  "region": "Texas",
+  "city": "Austin",
+  "zip": "78701",
+  "created_at": "2022-07-14T18:35:26.116Z",
+  "updated_at": "2022-07-14T18:35:26.116Z"
+}
