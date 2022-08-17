@@ -28,5 +28,9 @@ module Fera
     rescue StandardError
       nil
     end
+
+    def encode_jwt(payload)
+      JWT.encode(payload, @client_secret)
+    end
   end
 end

@@ -22,7 +22,8 @@ module Fera
       previous_base_site = Base.site
       previous_base_headers = Base.headers
 
-      Base.site = api_url || 'https://api.fera.ai/v3/private'
+      api_url ||= 'https://api.fera.ai'
+      Base.site = "#{ api_url.chomp('/') }/v3/private"
 
       if api_key =~ /^sk_/
         Base.headers['Secret-Key'] = api_key

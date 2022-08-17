@@ -252,7 +252,7 @@ module Fera
     end
 
     def save!(extra_params = {})
-      save(extra_params, true)
+      save(extra_params, raise: true)
     end
 
     def clone_with_nil

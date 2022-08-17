@@ -24,12 +24,12 @@ module Fera
     def is_video?
       type.to_s == 'video'
     end
-    alias video? is_video?
+    alias_method :video?, :is_video?
 
     def is_photo?
       type.to_s == 'photo'
     end
-    alias photo? is_photo?
+    alias_method :photo?, :is_photo?
 
     def file=(val)
       if val.is_a?(File)

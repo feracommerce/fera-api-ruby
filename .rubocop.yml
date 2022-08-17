@@ -12,14 +12,10 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: enable
 
-Style/OpenStructUse:
-  Enabled: false
 Gemspec/OrderedDependencies:
   Enabled: false
 Lint/NonLocalExitFromIterator:
   Enabled: false # We actually believe that it is more readable with premature returns
-Style/MapToHash:
-  Enabled: false # We believe it's more readable to use map vs hash with block syntax
 Layout/BeginEndAlignment:
   Enabled: false # We believe it's more readable to have begin blocks aligned to the end blocks (and also helps with code smells)
 Lint/AmbiguousRegexpLiteral:
@@ -97,6 +93,8 @@ Naming/VariableNumber:
   Enabled: false
 Style/AsciiComments:
   Enabled: false # It's 2022, emojis are everywhere
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
 Style/CaseLikeIf:
   Enabled: false
 Style/CommentAnnotation:
@@ -113,6 +111,8 @@ Style/Documentation:
   Enabled: false # We will decide in PR whether public method should be documented or not.
 Style/DocumentationMethod:
   Enabled: false # We will decide in PR whether public method should be documented or not.
+Style/EmptyElse:
+  EnforcedStyle: empty # It helps you handle all cases if you explicitly write out the `else` with `nil` if you want to allow that case
 Style/FloatDivision:
   Enabled: false # Sometimes we're trying to force the number to become a float and it could be nil
 Style/FrozenStringLiteralComment:
@@ -141,10 +141,14 @@ Style/MultilineBlockChain:
   Enabled: false # Sometimes these are more readable
 Style/MutableConstant:
   Enabled: false
+Style/MapToHash:
+  Enabled: false # We believe it's more readable to use map vs hash with block syntax
 Style/NumericPredicate:
   Enabled: false # .zero? and .positive? are a bit less readable than == 0 IMO
 Style/OptionHash:
   Enabled: false # It is more intuitive to pass option hashes to other objects in many times
+Style/OpenStructUse:
+  Enabled: false
 Style/RedundantRegexpCharacterClass:
   Enabled: false # No need to make regexp less readable than they already are by reducing redundancy
 Style/RedundantRegexpEscape:
