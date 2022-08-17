@@ -1,4 +1,5 @@
 [![Checks](https://github.com/feracommerce/fera-api-ruby/actions/workflows/checks.yml/badge.svg)](https://github.com/feracommerce/fera-api-ruby/actions/workflows/checks.yml)
+[![Tests](https://github.com/feracommerce/fera-api-ruby/actions/workflows/tests.yml/badge.svg)](https://github.com/feracommerce/fera-api-ruby/actions/workflows/tests.yml)
 
 # Fera API Ruby Client
 
