@@ -13,4 +13,5 @@ group :development, :test do
   gem "pry-rescue"
   gem "pry-stack_explorer"
   gem "rubocop"
+  gem "rubocop-rspec"
 end

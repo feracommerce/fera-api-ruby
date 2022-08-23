@@ -4,18 +4,20 @@ describe Fera::Review do
   before do
     Fera::Api.configure("MOCK_API_KEY")
   end
+
   describe "#all" do
     let(:result) { described_class.all }
 
-    context "successful response" do
+    context "when successful response" do
       before do
         stub_request(:get, /.*\/reviews\.json(\?.*)?/i).to_return(status: 200, body: mocked_responses.to_json, headers: { 'Content-Type': 'application/json' })
       end
+
       let(:mocked_responses) { { data: response_data, meta: response_meta } }
       let(:response_data) { nil }
       let(:response_meta) { nil }
 
-      context "empty data" do
+      context "when empty data response" do
         let(:response_data) { [] }
         let(:response_meta) { { page: 1, per_page: 10, page_count: 1, limit: 10, offset: 0, total_count: 0 } }
 
@@ -24,7 +26,7 @@ describe Fera::Review do
         end
       end
 
-      context "empty data" do
+      context "when array of data response" do
         let(:response_data) { [load_sample_json_file(:review)] }
         let(:response_meta) { { page: 1, per_page: 10, page_count: 1, limit: 10, offset: 0, total_count: 0 } }
 

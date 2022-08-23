@@ -33,7 +33,7 @@ def load_sample_json_file(file_name)
 end
 
 RSpec.configure do |config|
-  config.after(:each) do |example|
+  config.after do |example|
     next if !example.exception || $pryed_on_error
 
     if ENV['DEBUG'].to_bool || ENV['PRY_ON_ERROR'].to_bool

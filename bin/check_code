@@ -11,7 +11,7 @@ puts "Gem binaries appear to be installed to #{ GEM_BIN_DIR }."
 CODE_CHECKERS = {
   rubocop: {
     bin_name: "rubocop",
-    install_cmd: "gem install rubocop",
+    install_cmd: "gem install rubocop && gem install rubocop-rails && gem install rubocop-rspec",
     run_cmd: "bundle exec rubocop  --parallel --config .rubocop.yml",
     name: "Rubocop",
     arg_letter: "r",

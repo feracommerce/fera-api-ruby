@@ -62,3 +62,6 @@ Procfile-local
 
 # From SimpleConv gem
 coverage
+
+# Rubocop cache
+.rubocop-http*

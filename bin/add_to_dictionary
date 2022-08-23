@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+require "fileutils"
+require 'optparse'
+include FileUtils
+
+# path to your application root.
+APP_ROOT = File.expand_path("..", __dir__)
+DICTIONARY_FOLDERS = [
+  "#{ APP_ROOT }/.spellr_wordlists/",
+]
+LANGUAGES = %w(english html javascript ruby css)
+
+class CustomDictionary
+  def initialize
+    @options = { only: [], except: [] }
+    @parser = OptionParser.new do |opts|
+      opts.banner = "Usage: ./bin/add_to_dictionary word1 word2 ... [options]"
+
+      opts.on("-l", "--language language", String, "Language to add the word to. Options are: #{ LANGUAGES.join(', ') }.  Default: english") do |v|
+        @options[:language] = v.to_s.downcase
+
+        unless LANGUAGES.include?(@options[:language])
+          abort("Invalid language: #{ @options[:language] }. Available options are: #{ LANGUAGES.join(', ') }")
+        end
+      end
+
+      opts.on("-h", "--help", "Prints this help") do
+        puts opts
+        exit(0)
+      end
+    end
+    @parser.parse!
+
+    @options[:language] ||= LANGUAGES[0].to_s
+  end
+
+  def add_word(word)
+    if word.nil?
+      puts @parser.help
+      exit(1)
+    end
+
+    DICTIONARY_FOLDERS.each do |folder|
+      Dir["#{ folder }#{ @options[:language] }.*"].each do |file_path|
+        words = File.exist?(file_path) ? File.read(file_path).to_s.split("\n") : []
+
+        if words.include?(word)
+          puts "👍  '#{ word }' already exists in #{ file_path.gsub(/^#{ APP_ROOT }\//, '') }."
+        else
+          words << word
+          words = words.uniq.reject{ |w| w.nil? || w == "" }.sort
+          File.write(file_path, words.join("\n") + "\n")
+
+          puts "✅  Added '#{ word }' to #{ file_path.gsub(/^#{ APP_ROOT }\//, '') }."
+        end
+      end
+    end
+  end
+end
+
+dictionary = CustomDictionary.new
+ARGV.each do |word|
+  dictionary.add_word(word)
+end
