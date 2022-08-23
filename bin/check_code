@@ -1,0 +1,158 @@
+#!/usr/bin/env ruby
+require "fileutils"
+require 'optparse'
+include FileUtils
+
+APP_ROOT = File.expand_path("..", __dir__)
+GEM_BIN_DIR = `gem environment`.match(/EXECUTABLE DIRECTORY: (.*)/)[1]
+
+puts "Gem binaries appear to be installed to #{ GEM_BIN_DIR }."
+
+CODE_CHECKERS = {
+  rubocop: {
+    bin_name: "rubocop",
+    install_cmd: "gem install rubocop",
+    run_cmd: "bundle exec rubocop  --parallel --config .rubocop.yml",
+    name: "Rubocop",
+    arg_letter: "r",
+    autocorrect_arg: "-a",
+    unsafe_autocorrect_arg: "-A",
+    type: :ruby,
+  },
+  spellr: {
+    bin_name: "spellr",
+    install_cmd: "gem install spellr",
+    run_cmd: "#{ GEM_BIN_DIR }/spellr",
+    name: "Spellr",
+    arg_letter: "S",
+    unsafe_autocorrect_arg: "--autocorrect",
+    type: :general,
+  }
+}
+
+class CodeChecker
+  attr_accessor :options
+
+  def initialize
+    self.options = { only: [], except: [] }
+
+    OptionParser.new do |opts|
+      opts.banner = "Usage: ./bin/check_code [options]"
+
+      CODE_CHECKERS.each do |type, cfg|
+        opts.on("-#{ cfg[:arg_letter] }", "--[no-]#{ type }", "Run only #{ cfg[:name] } and only other specifically defined checkers") do |v|
+          self.options[:only] << type if v
+          self.options[:except] << type unless v
+        end
+      end
+
+      opts.on("-a", "--autocorrect", "Safely autocorrect all issues (Also see -A)") do
+        self.options[:autocorrect] = :safe
+      end
+
+      opts.on("-A", "--autocorrect-unsafe", "Run auto-correctors that are usually correct, but might not be. Be sure to check these changes thoroughly after running this command.") do
+        self.options[:autocorrect] = :unsafe
+      end
+
+    end.parse!
+  end
+
+  def install_and_run!(type)
+    cfg = CODE_CHECKERS[type]
+    bin_name = cfg[:bin_name] || type.to_s
+    name = cfg[:name] || type.to_s
+
+    bin_path = `whereis #{ bin_name }`.strip.split(": ")[1]
+
+    puts "\n== BEGIN #{ name } ==\n"
+    if bin_path.nil?
+      print "Installing #{ bin_name } since it does not appear installed..."
+      unless system(cfg[:install_cmd].to_s)
+        raise StandardError, "Failed to install #{ bin_name } - aborting."
+      end
+      bin_path = `whereis #{ bin_name }`.strip.split(": ").last
+      puts "Installed #{ bin_name } successfully to #{ bin_path }. Now running it..."
+    else
+      puts "#{ name } found @ #{ bin_path }. Running it..."
+    end
+
+    cmd = cfg[:run_cmd]
+
+    if options[:autocorrect] == :safe && cfg[:autocorrect_arg]
+      cmd += " #{ cfg[:autocorrect_arg] }"
+    elsif options[:autocorrect] == :unsafe && cfg[:unsafe_autocorrect_arg]
+      cmd += " #{ cfg[:unsafe_autocorrect_arg] }"
+    end
+
+    puts "Running command: #{ cmd }..."
+
+    run_result = system(cmd.to_s)
+
+    puts run_result ? "✅  #{ name }: PASS" : "🚨  #{ name }: FAIL"
+
+    puts "\n== END #{ name } ==\n"
+
+    !!run_result
+  end
+
+  def do_run?(type)
+    unless options[:only].empty?
+      return options[:only].include?(type)
+    end
+
+    unless options[:except].empty?
+      return !options[:except].include?(type)
+    end
+
+    true
+  end
+
+  def output_run_summary(type)
+    print "#{ CODE_CHECKERS[type][:name] || type }: "
+    if @results[type].nil?
+      puts "⏩  Skipped"
+    else
+      puts "#{ @results[type] ? "✅  PASS" : "🚨  FAIL" }"
+    end
+  end
+
+  def output_summary
+    puts "\n== BEGIN SUMMARY: ==\n"
+
+    CODE_CHECKERS.each do |type, _cfg|
+      output_run_summary(type)
+    end
+
+    puts "\n== END SUMMARY ==\n"
+  end
+
+  def finalize!
+    if @results.values.all?
+      puts "🎉  All checks passed!"
+      exit(0)
+    else
+      puts "🚨  Some checks failed!"
+      exit(1)
+    end
+  end
+
+  def run!
+    chdir APP_ROOT do
+      @results = {}
+
+      puts "NOTE: Safe auto-correct enabled: Only things that are safe to change and very unlikely to break code will be changed." if options[:autocorrect] == :safe
+      puts "WARNING: Unsafe auto-correct enabled: Will attempt to correct all issues. Check code thoroughly after running this command." if options[:autocorrect] == :unsafe
+
+      CODE_CHECKERS.each do |type, _cfg|
+        @results[type] = install_and_run!(type) if do_run?(type)
+      end
+    end
+
+    output_summary
+
+    finalize!
+  end
+end
+
+checker = CodeChecker.new
+checker.run!

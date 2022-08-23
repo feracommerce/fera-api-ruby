@@ -6,20 +6,39 @@ AllCops:
     - 'db/schema.rb'
     - 'node_modules/**/*'
     - 'tmp/**/*'
+    - bin/*
+    - Rakefile
+    - config.ru
     - 'lib/tasks/one_offs/**/*' # We don't really care about linting one-off tasks
     - 'app/migrators/**/*' # Migrators are one-off tasks so there isn't much need to lint them
+    - "spec/factories/**/*"
+    - "spec/fixtures/**/*"
+    - "*/spec/fixtures/**/*"
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: enable
 
-Lint/NonLocalExitFromIterator:
-  Enabled: false # We actually believe that it is more readable with premature returns
-Layout/BeginEndAlignment:
-  Enabled: false # We believe it's more readable to have begin blocks aligned to the end blocks (and also helps with code smells)
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - '*/spec/**/*.rb' # Legit concern but it's too hard for us to solve existing problems
+    - 'spec/**/*.rb'
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
 Lint/AssignmentInCondition:
   Enabled: false
+Layout/BeginEndAlignment:
+  Enabled: false # We believe it's more readable to have begin blocks aligned to the end blocks (and also helps with code smells)
+Lint/EmptyBlock:
+  Exclude:
+    - '*/spec/**/*.rb' # Empty let blocks are useful in specs
+    - 'spec/**/*.rb'
+Lint/NonLocalExitFromIterator:
+  Enabled: false # We actually believe that it is more readable with premature returns
+Lint/Void:
+  Enabled: true
+  Exclude:
+    - '*/spec/**/*.rb' # Sometimes we need to call a variable to trigger the "let" action.
+    - 'spec/**/*.rb'
 Metrics/AbcSize:
   Max: 60
 # Use the default setting
@@ -31,6 +50,8 @@ Metrics/BlockLength:
     - '**/*.rake'
     # In many cases, config/routes.rb has very long block
     - 'config/routes.rb'
+    - '*/spec/**/*.rb' # Some blocks can be really long with sample data
+    - 'spec/**/*.rb'
 Metrics/ClassLength:
   Enabled: false
 Metrics/CyclomaticComplexity:
@@ -45,6 +66,10 @@ Metrics/PerceivedComplexity:
   Enabled: false
 Layout/ArgumentAlignment:
   Enabled: false
+Layout/LineContinuationLeadingSpace:
+  Exclude:
+    - '*/spec/**/*.rb ' # Just a pain for specs that contain lots of sample data.
+    - 'spec/**/*.rb'
 Layout/HashAlignment:
   Enabled: false
 Layout/ParameterAlignment:
@@ -58,6 +83,9 @@ Layout/HeredocIndentation:
 Layout/LineLength:
   Max: 200
   AllowedPatterns: ['^\s*#', '^\s*([a-zA-Z]*[lL]og[a-zA-Z]*)[ (]', '^\s*[''"]', '.*#.{30,300}', '^\s*[a-z_]:\s*".+",?[}\s]*$']
+  Exclude:
+    - '*/spec/**/*.rb '# Nicer to have sample data on a single long line
+    - 'spec/**/*.rb'
 Layout/MultilineArrayBraceLayout:
   Enabled: false
 Layout/MultilineAssignmentLayout:
@@ -92,6 +120,10 @@ Style/AsciiComments:
   Enabled: false # It's 2022, emojis are everywhere
 Style/Alias:
   EnforcedStyle: prefer_alias_method
+Style/BlockDelimiters:
+  Exclude:
+    - '*/spec/**/*.rb' # Curly braces are more common for spec let statements and factories
+    - 'spec/**/*.rb'
 Style/CaseLikeIf:
   Enabled: false
 Style/CommentAnnotation:
