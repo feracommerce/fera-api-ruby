@@ -18,6 +18,7 @@ module Fera
 
     ##
     # @param api_key [String] Public API key, Secret API key or Auth Token (if app)
+    # @return [Object, ::Fera::API] Result of the block operation if given, otherwise self
     def self.configure(api_key, api_url: nil, strict_mode: false, debug_mode: false)
       previous_base_site = Base.site
       previous_base_headers = Base.headers
