@@ -38,4 +38,30 @@ describe Fera::Review do
       end
     end
   end
+
+  describe "#create" do
+    let(:creation_result) { described_class.create(request_data) }
+
+    context "when successful response" do
+      before do
+        stub_request(:post, /.*\/reviews\.json(\?.*)?/i).to_return(status: 200, body: load_sample_json_file(:review).to_json, headers: { 'Content-Type': 'application/json' })
+      end
+
+      let(:request_data) {
+        {
+          rating:  5,
+          heading: SecureRandom.uuid,
+          body:    SecureRandom.uuid,
+        }
+      }
+
+      context "when creation is successful" do
+        it "returns resulting data" do
+          expect(creation_result).to be_present
+          expect(creation_result.id).to be_a(String)
+          expect(creation_result.rating).to be_a(Integer)
+        end
+      end
+    end
+  end
 end

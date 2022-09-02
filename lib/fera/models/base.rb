@@ -209,7 +209,7 @@ module Fera
           end
         end
 
-        connection.post(collection_path(nil, extra_params), data.to_json, self.class.headers).tap do |response|
+        connection.post(collection_path(nil, extra_params), { data: data }.to_json, self.class.headers).tap do |response|
           self.id = id_from_response(response)
           load_attributes_from_response(response)
         end

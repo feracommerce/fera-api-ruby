@@ -10,6 +10,7 @@ require_relative "../lib/fera/app"
 require 'bundler/setup'
 require 'active_support/testing/time_helpers'
 require "to_bool"
+require "pry"
 
 # Webmock allows us to mock responses from external requests by specifying a URL
 # @see spec/factories/store_factory.rb for example usage
