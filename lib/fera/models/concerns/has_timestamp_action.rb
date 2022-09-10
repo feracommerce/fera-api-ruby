@@ -12,13 +12,16 @@ module Fera
       #   class Order < Fera::Base
       #     include HasTimestampAction
       #
-      #     timestamp_action :deliver
+      #     timestamp_action deliver: :delivered
       #   end
       #
       #   routes to `PUT /orders/1/deliver`
       #
       #   order = Order.find(1)
+      #   order.delivered? # => false
       #   order.deliver!(Time.now)
+      #   order.delivered? # => true
+      #   order.delivered_at # => 2018-01-01 00:00:00 UTC
       #
       #   or
       #
@@ -26,15 +29,19 @@ module Fera
       #
       # @param [Array<Symbol>] actions
       def timestamp_action(args)
-        args.each do |action, attribute|
+        args.each do |action, state|
           define_method("#{ action }!") do |at = nil|
-            changed_attributes = { "#{ attribute }": (at || Time.now).utc }
+            changed_attributes = { "#{ state }_at": (at || Time.now).utc }
 
             put(action, changed_attributes)
 
             load(changed_attributes)
 
             true
+          end
+
+          define_method("#{ state }?") do
+            send("#{ state }_at?")
           end
 
           define_singleton_method("#{ action }!") do |id, at = nil|

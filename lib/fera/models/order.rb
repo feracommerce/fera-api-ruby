@@ -3,6 +3,6 @@ module Fera
     include BelongsToCustomer
     include HasTimestampAction
 
-    timestamp_action pay: :paid_at, deliver: :delivered_at, fulfill: :fulfilled_at
+    timestamp_action pay: :paid, deliver: :delivered, fulfill: :fulfilled
   end
 end
