@@ -1,7 +1,5 @@
 require 'active_support/concern'
 
-require "pry"
-
 module Fera
   module HasTimestampAction
     extend ActiveSupport::Concern
