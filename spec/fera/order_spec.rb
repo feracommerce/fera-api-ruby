@@ -51,7 +51,7 @@ describe Fera::Order do
 
       context "when delivered_at is a string" do
         let(:result) { order.deliver!("2022-09-23T22:29:46+00:00") }
-  
+
         it "is successful" do
           expect(result).to be_truthy
         end
@@ -69,7 +69,6 @@ describe Fera::Order do
         expect { result }.to raise_error ActiveResource::BadRequest
       end
     end
-
   end
 
   describe "#fulfill!" do
