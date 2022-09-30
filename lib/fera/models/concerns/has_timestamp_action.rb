@@ -29,7 +29,7 @@ module Fera
       def timestamp_action(args)
         args.each do |action, state|
           define_method("#{ action }!") do |at = nil|
-            changed_attributes = { "#{ state }_at": (at || Time.now).utc }
+            changed_attributes = { "#{ state }_at": at.presence || Time.now.utc }
 
             put(action, changed_attributes)
 
