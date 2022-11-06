@@ -19,23 +19,18 @@ module Fera
     ##
     # @param api_key [String] Public API key, Secret API key or Auth Token (if app)
     # @return [Object, ::Fera::API] Result of the block operation if given, otherwise self
-    def self.configure(api_key, api_url: nil, strict_mode: false, debug_mode: false)
-      previous_base_site = Base.site
-      previous_base_headers = Base.headers
+    def self.configure(api_key, api_url: nil, strict_mode: false, debug_mode: false, api_type: nil)
+      previous_base_site = Base.site.dup
+      previous_base_headers = Base.headers.dup
+      previous_debug_mode = @debug_mode
 
       api_url ||= 'https://api.fera.ai'
-      Base.site = "#{ api_url.chomp('/') }/v3/private"
+      api_type ||= api_key.include?('sk_') ? 'private' : 'public'
+      Base.site = "#{ api_url.chomp('/') }/v3/#{ api_type }"
 
       @debug_mode = debug_mode
 
-      if api_key =~ /^sk_/
-        Base.headers['Secret-Key'] = api_key
-      elsif api_key =~ /^pk_/
-        Base.headers['Public-Key'] = api_key
-      else
-        Base.headers['Authorization'] = "Bearer #{ api_key }"
-      end
-
+      Base.api_key = api_key
       Base.headers['Strict-Mode'] = strict_mode if strict_mode
 
       if block_given?
@@ -43,9 +38,8 @@ module Fera
           result = yield
         ensure
           Base.site = previous_base_site
-          previous_base_headers.each do |key, value|
-            Base.headers[key] = value
-          end
+          Base.headers = previous_base_headers
+          @debug_mode = previous_debug_mode
         end
 
         result
@@ -56,6 +50,10 @@ module Fera
 
     def self.debug_mode?; @debug_mode; end
 
+    ##
+    # @option client_id [String] Fera app Client ID
+    # @option client_secret [String] Fera app Client secret
+    # @option auth_token [String] Auth token you wish to revoke access for.
     def self.revoke_token!(client_id:, client_secret:, auth_token:)
       previous_site = Base.site
 

@@ -8,6 +8,52 @@ module Fera
     self.site ||= "https://api.fera.ai/v3/private"
 
     class << self
+      ##
+      # Sets the header API key for subsequent requests
+      # @param api_key [String] Secret Key, Public Key or OAuth Access Token.
+      def api_key=(api_key)
+        if api_key.blank?
+          self.headers.delete('Secret-Key')
+          self.headers.delete('Public-Key')
+          self.headers.delete('Authorization')
+        elsif api_key =~ /^sk_/
+          self.headers['Secret-Key'] = api_key
+        elsif api_key =~ /^pk_/
+          self.headers['Public-Key'] = api_key
+        else
+          self.headers['Authorization'] = "Bearer #{ api_key }"
+        end
+      end
+
+      ##
+      # Sets all the headers for subsequent requests
+      # @param new_headers [Hash] Hash of new headers to set
+      def headers=(new_headers)
+        new_headers.to_h.each do |key, value|
+          self.headers[key] = value
+        end
+
+        self.headers.to_h.each do |key, _|
+          self.headers.delete(key) unless new_headers.key?(key)
+        end
+      end
+
+      def api_key
+        self.headers['Secret-Key'] || self.headers['Public-Key'] || self.headers['Authorization'].to_s.split.last.presence
+      end
+
+      ##
+      # Returns sorted results.
+      # @note This only works from the root, not with scoped results (`Fera::Review.order(created_at: :asc)`)
+      # @param sorts [Hash, String, Symbol]
+      def order(sorts)
+        sorts = { sorts.to_s => :desc.to_s } if sorts.is_a?(String) || sorts.is_a?(Symbol)
+        sort_by = sorts.map do |column, direction|
+          "#{ column }:#{ direction.presence || :desc }"
+        end.join(",")
+        where(sort_by: sort_by)
+      end
+
       def belongs_to(name, options = {})
         @belongs_tos = @belongs_tos.to_h.merge(name => options)
       end
@@ -285,7 +331,7 @@ module Fera
     end
 
     #
-    # Method missing adapters to define public_*_id
+    # Method missing adapters to define is_* methods for boolean attributes
     #
 
     def method_missing(method_name, *args, &block)
