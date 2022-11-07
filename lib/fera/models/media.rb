@@ -5,6 +5,7 @@ module Fera
     include BelongsToProduct
     include BelongsToReview
     include BelongsToSubmission
+    include BelongsToOrder
 
     after_create :remove_file_param
 

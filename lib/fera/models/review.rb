@@ -5,6 +5,7 @@ module Fera
     include BelongsToCustomer
     include BelongsToProduct
     include BelongsToSubmission
+    include BelongsToOrder
 
     def only_rating?
       body.blank? && heading.blank?
