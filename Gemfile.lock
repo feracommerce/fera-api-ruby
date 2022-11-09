@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fera-api (0.2.3)
+    fera-api (0.2.4)
       activemodel (>= 4)
       activeresource (>= 6)
       activesupport (>= 4.0)

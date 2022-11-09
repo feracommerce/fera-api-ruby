@@ -25,7 +25,7 @@ module Fera
       previous_debug_mode = @debug_mode
 
       api_url ||= 'https://api.fera.ai'
-      api_type ||= api_key.include?('sk_') ? 'private' : 'public'
+      api_type ||= api_key.include?('pk_') ? 'public' : 'private'
       Base.site = "#{ api_url.chomp('/') }/v3/#{ api_type }"
 
       @debug_mode = debug_mode
