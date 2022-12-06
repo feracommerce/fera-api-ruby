@@ -3,7 +3,9 @@ require "fileutils"
 require 'optparse'
 include FileUtils
 
+# path to your application root.
 APP_ROOT = File.expand_path("..", __dir__)
+
 GEM_BIN_DIR = `gem environment`.match(/EXECUTABLE DIRECTORY: (.*)/)[1]
 
 puts "Gem binaries appear to be installed to #{ GEM_BIN_DIR }."
@@ -20,14 +22,14 @@ CODE_CHECKERS = {
   },
   spellr: {
     bin_name: "spellr",
-    install_cmd: "gem install spellr",
-    run_cmd: "#{ GEM_BIN_DIR }/spellr",
+    run_cmd: "bundle exec spellr",
     name: "Spellr",
     arg_letter: "S",
     unsafe_autocorrect_arg: "--autocorrect",
     type: :general,
   }
 }
+
 
 class CodeChecker
   attr_accessor :options
@@ -61,18 +63,21 @@ class CodeChecker
     bin_name = cfg[:bin_name] || type.to_s
     name = cfg[:name] || type.to_s
 
-    bin_path = `whereis #{ bin_name }`.strip.split(": ")[1]
 
     puts "\n== BEGIN #{ name } ==\n"
-    if bin_path.nil?
-      print "Installing #{ bin_name } since it does not appear installed..."
-      unless system(cfg[:install_cmd].to_s)
-        raise StandardError, "Failed to install #{ bin_name } - aborting."
+    if cfg[:install_cmd]
+      bin_path = `whereis #{ bin_name }`.strip.split(": ")[1]
+
+      if bin_path.nil?
+        print "Installing #{ bin_name } since it does not appear installed..."
+        unless system(cfg[:install_cmd].to_s)
+          raise StandardError, "Failed to install #{ bin_name } - aborting."
+        end
+        bin_path = `whereis #{ bin_name }`.strip.split(": ").last
+        puts "Installed #{ bin_name } successfully to #{ bin_path }. Now running it..."
+      else
+        puts "#{ name } found @ #{ bin_path }. Running it..."
       end
-      bin_path = `whereis #{ bin_name }`.strip.split(": ").last
-      puts "Installed #{ bin_name } successfully to #{ bin_path }. Now running it..."
-    else
-      puts "#{ name } found @ #{ bin_path }. Running it..."
     end
 
     cmd = cfg[:run_cmd]

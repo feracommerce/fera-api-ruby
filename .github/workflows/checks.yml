@@ -5,31 +5,20 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-      - name: Cache gems
+      - name: Cache yarn packages
         uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-rubocop-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package.lock') }}
           restore-keys: |
-            ${{ runner.os }}-rubocop-
+            ${{ runner.os }}-yarn-
       - name: Install gems
-        run: |
-          bundle config path vendor/bundle
-          bundle config set without 'default doc job cable storage ujs test db'
-          bundle install --jobs 4 --retry 3
-          gem install rubocop
-          gem install spellr
-      - name: Rubocop
-        run: |
-          rubocop -v
-          rubocop --format simple --parallel --config .rubocop.yml
-      - name: Spelling
-          spellr -v
-        run: spellr
+        run: bundle install
+      - name: Check Code
+        run: ./bin/check_code
