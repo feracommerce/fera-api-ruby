@@ -6,7 +6,7 @@ describe Fera::API do
       context "with auth token" do
         it "sets the API key in the headers" do
           described_class.configure("ExampleAuthToken", headers: {
-            'X-Example-Header' => 'ExampleHeaderValue'
+            'X-Example-Header' => 'ExampleHeaderValue',
           }) do
             expect(Fera::Base.api_key).to eq("ExampleAuthToken")
             expect(Fera::Base.headers['Authorization']).to eq("Bearer ExampleAuthToken")

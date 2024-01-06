@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fera-api (0.3.4)
+    fera-api (0.4.0)
       activemodel (>= 4)
       activeresource (>= 6)
       activesupport (>= 4.0)
@@ -11,8 +11,8 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.4)
-      activesupport (= 7.0.4)
+    activemodel (7.1.2)
+      activesupport (= 7.1.2)
     activemodel-serializers-xml (1.0.2)
       activemodel (> 5.x)
       activesupport (> 5.x)
@@ -21,15 +21,22 @@ GEM
       activemodel (>= 6.0)
       activemodel-serializers-xml (~> 1.0)
       activesupport (>= 6.0)
-    activesupport (7.0.4)
+    activesupport (7.1.2)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.1.0)
     ast (2.4.2)
+    base64 (0.2.0)
+    bigdecimal (3.1.5)
     bindata (2.4.15)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
@@ -37,11 +44,15 @@ GEM
     byebug (11.1.3)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crack (0.4.5)
       rexml
     debug_inspector (1.1.0)
     diff-lcs (1.5.0)
-    faraday (2.7.6)
+    drb (2.2.0)
+      ruby2_keywords
+    faraday (2.8.1)
+      base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-follow_redirects (0.3.0)
@@ -54,14 +65,16 @@ GEM
     interception (0.5)
     jaro_winkler (1.5.4)
     json (2.6.2)
-    json-jwt (1.16.3)
+    json-jwt (1.16.5)
       activesupport (>= 4.2)
       aes_key_wrap
+      base64
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
     method_source (1.0.0)
-    minitest (5.18.1)
+    minitest (5.20.0)
+    mutex_m (0.2.0)
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
@@ -153,4 +166,4 @@ DEPENDENCIES
   webmock (>= 3.0)
 
 BUNDLED WITH
-   2.3.15
+   2.3.17
