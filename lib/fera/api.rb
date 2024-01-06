@@ -19,7 +19,7 @@ module Fera
     ##
     # @param api_key [String] Public API key, Secret API key or Auth Token (if app)
     # @return [Object, ::Fera::API] Result of the block operation if given, otherwise self
-    def self.configure(api_key, api_url: nil, strict_mode: false, debug_mode: false, api_type: nil)
+    def self.configure(api_key, api_url: nil, strict_mode: false, debug_mode: false, api_type: nil, headers: {})
       previous_base_site = Base.site.dup
       previous_base_headers = Base.headers.dup
       previous_debug_mode = @debug_mode
@@ -30,6 +30,7 @@ module Fera
 
       @debug_mode = debug_mode
 
+      headers.to_a.each { |k, v| Base.headers[k] = v if v.present? }
       Base.api_key = api_key
       Base.headers['Strict-Mode'] = strict_mode if strict_mode
 
